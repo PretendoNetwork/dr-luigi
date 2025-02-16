@@ -5,7 +5,7 @@ import "github.com/PretendoNetwork/dr-luigi/globals"
 func initPostgres() {
 	var err error
 
-	_, err = Postgres.Exec(`CREATE TABLE IF NOT EXISTS rankings (
+	_, err = globals.Postgres.Exec(`CREATE TABLE IF NOT EXISTS rankings (
 		owner_pid integer,
 		unique_id bigint,
 		category integer,
@@ -22,7 +22,7 @@ func initPostgres() {
 		return
 	}
 
-	_, err = Postgres.Exec(`CREATE TABLE IF NOT EXISTS common_datas (
+	_, err = globals.Postgres.Exec(`CREATE TABLE IF NOT EXISTS common_datas (
 		unique_id bigserial,
 		owner_pid integer,
 		common_data bytea,

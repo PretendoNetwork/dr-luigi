@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"database/sql"
 
 	"github.com/PretendoNetwork/nex-go/v2"
 	"github.com/PretendoNetwork/nex-go/v2/types"
@@ -130,6 +131,13 @@ func init() {
 	globals.GRPCFriendsCommonMetadata = metadata.Pairs(
 		"X-API-Key", friendsGRPCAPIKey,
 	)
+
+	globals.Postgres, err = sql.Open("postgres", os.Getenv("PN_MINECRAFT_POSTGRES_URI"))
+	if err != nil {
+		globals.Logger.Critical(err.Error())
+	}
+
+	globals.Logger.Success("Connected to Postgres!")
 
 	database.ConnectPostgres()
 }
