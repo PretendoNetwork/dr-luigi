@@ -5,16 +5,18 @@ import (
 
 	ranking_types "github.com/PretendoNetwork/nex-protocols-go/v2/ranking/types"
 
+	"github.com/PretendoNetwork/dr-luigi/globals"
+	
 	"github.com/PretendoNetwork/nex-go/v2/types"
 )
 
-func InsertRankingByPIDAndRankingScoreData(pid *types.PID, rankingScoreData *ranking_types.RankingScoreData, uniqueID *types.PrimitiveU64) error {
+func InsertRankingByPIDAndRankingScoreData(pid types.PID, rankingScoreData ranking_types.RankingScoreData, uniqueID types.UInt64) error {
 	now := time.Now().UnixNano()
-	if(rankingScoreData.Score.Value == 0){
+	if(rankingScoreData.Score == 0){
 		return nil
 	}
 
-	_, err := Postgres.Exec(`
+	_, err := globals.Postgres.Exec(`
 		INSERT INTO rankings (
 			owner_pid,
 			category,
@@ -29,14 +31,14 @@ func InsertRankingByPIDAndRankingScoreData(pid *types.PID, rankingScoreData *ran
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 		ON CONFLICT (owner_pid, unique_id, category) DO UPDATE 
 		SET score = excluded.score;`,
-		pid.Value(),
-		rankingScoreData.Category.Value,
-		rankingScoreData.Score.Value,
-		rankingScoreData.OrderBy.Value,
-		rankingScoreData.UpdateMode.Value,
-		rankingScoreData.Groups.Value,
-		rankingScoreData.Param.Value & 0x7FFFFFFFFFFFFFFF,
-		uniqueID.Value,
+		pid,
+		rankingScoreData.Category,
+		rankingScoreData.Score,
+		rankingScoreData.OrderBy,
+		rankingScoreData.UpdateMode,
+		rankingScoreData.Groups,
+		rankingScoreData.Param & 0x7FFFFFFFFFFFFFFF,
+		uniqueID,
 		now,
 	)
 
