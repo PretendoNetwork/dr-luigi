@@ -32,18 +32,22 @@ func registerCommonSecureServerProtocols() {
 
 	matchMakingProtocol := match_making.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(matchMakingProtocol)
-	common_match_making.NewCommonProtocol(matchMakingProtocol)
+	commonMatchMakingProtocol := common_match_making.NewCommonProtocol(matchMakingProtocol)
+	commonMatchMakingProtocol.SetManager(globals.MatchmakingManager)
 
 	matchMakingExtProtocol := match_making_ext.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(matchMakingExtProtocol)
-	common_match_making_ext.NewCommonProtocol(matchMakingExtProtocol)
+	commonMatchMakingExtProtocol  := common_match_making_ext.NewCommonProtocol(matchMakingExtProtocol)
+	commonMatchMakingExtProtocol.SetManager(globals.MatchmakingManager)
 
 	matchmakeExtensionProtocol := matchmake_extension.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(matchmakeExtensionProtocol)
 	commonMatchmakeExtensionProtocol := common_matchmake_extension.NewCommonProtocol(matchmakeExtensionProtocol)
+	commonMatchmakeExtensionProtocol.SetManager(globals.MatchmakingManager)
+
+	globals.MatchmakingManager.GetUserFriendPIDs = nex_matchmake_extension_common.GetUserFriendPIDs
 
 	commonMatchmakeExtensionProtocol.CleanupSearchMatchmakeSession = nex_matchmake_extension_common.CleanupSearchMatchmakeSession
-	commonMatchmakeExtensionProtocol.GetUserFriendPIDs(nex_matchmake_extension_common.GetUserFriendPIDs)
 
 	rankingProtocol := ranking.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(rankingProtocol)
