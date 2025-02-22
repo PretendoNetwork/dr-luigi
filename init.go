@@ -135,7 +135,7 @@ func init() {
 		"X-API-Key", friendsGRPCAPIKey,
 	)
 
-	globals.Postgres, err = sql.Open("postgres", os.Getenv("PN_MINECRAFT_POSTGRES_URI"))
+	globals.Postgres, err = sql.Open("postgres", postgresURI)
 	if err != nil {
 		globals.Logger.Critical(err.Error())
 	}
