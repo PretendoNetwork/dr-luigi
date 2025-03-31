@@ -2,16 +2,16 @@ package main
 
 import (
 	"crypto/rand"
+	"database/sql"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
-	"database/sql"
 
-	"github.com/PretendoNetwork/nex-go/v2"
-	"github.com/PretendoNetwork/nex-go/v2/types"
 	pb_account "github.com/PretendoNetwork/grpc-go/account"
 	pb_friends "github.com/PretendoNetwork/grpc-go/friends"
+	"github.com/PretendoNetwork/nex-go/v2"
+	"github.com/PretendoNetwork/nex-go/v2/types"
 	"github.com/PretendoNetwork/plogger-go"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
