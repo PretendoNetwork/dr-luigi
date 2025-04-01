@@ -3,8 +3,8 @@ package database
 import (
 	"database/sql"
 
-	ranking_types "github.com/PretendoNetwork/nex-protocols-go/v2/ranking/types"
 	"github.com/PretendoNetwork/dr-luigi/globals"
+	ranking_types "github.com/PretendoNetwork/nex-protocols-go/v2/ranking/types"
 
 	"github.com/PretendoNetwork/nex-go/v2/types"
 )
@@ -26,6 +26,7 @@ func GetRankingsAndCountByCategoryAndRankingOrderParam(category types.UInt32, ra
 	if err != nil {
 		return rankings, 0, err
 	}
+	defer rows.Close()
 
 	row := 1
 	for rows.Next() {
